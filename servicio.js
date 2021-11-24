@@ -1,14 +1,7 @@
-//CLIENTE (VOY PARA EL RESTAURANTE)
-//RESTAURANTE=SERVIDOR DE SPOTIFY
-let uri="https://api.spotify.com/v1/artists/3YcBF2ttyueytpXtEzn1Za/top-tracks?market=us";
-
-let token="Bearer BQD9qpL1WiF9IcSxPCetaiyvE1ZJh_JabLE1sDw7zF5lztAoWsZgIeBDY69Kbhg2mbATFQlPT_WUPkHqapJUwToO7gIxc0BdQ-LIAedijgqjt_tLGp-IeGw1aN-3tj63iK8uMA7vVNMITTGOSoo";
+let uri="http://localhost:8081/casahogar/casahogar/v1/productos";
 
 let parametrosEnvio={
     method:"GET",
-    headers:{
-        Authorization:token
-    }
 }
 
 fetch(uri,parametrosEnvio)
@@ -27,10 +20,15 @@ function pintarDatos(datos){
 
     let fila=document.getElementById("fila")
 
-    datos.tracks.forEach(function(cancion){
-        console.log(cancion.name)
-        console.log(cancion.preview_url)
-        console.log(cancion.album.images[0].url)
+    console.log(datos)
+
+    datos.forEach(function(producto){
+        console.log(producto.producto)
+        console.log(producto.precio)
+        console.log(producto.foto)
+        console.log(producto.descripcion)
+        console.log(producto.id)
+        console.log(producto.tipo)
 
         //crear un div con js
         let columna=document.createElement("div")
@@ -40,22 +38,48 @@ function pintarDatos(datos){
         let tarjeta=document.createElement("div")
         tarjeta.classList.add("card")
         tarjeta.classList.add("h-100")
+        tarjeta.classList.add("p-3")
 
         //creo una img de tarjeta
         let imagen=document.createElement("img")
         imagen.classList.add("card-img-top")
-        imagen.src=cancion.album.images[0].url
+        imagen.classList.add("h-100")
+        imagen.src=producto.foto
 
-        //creo una etiquetra de audio
-        let audio=document.createElement("audio")
-        audio.classList.add("w-100")
-        audio.classList.add("mt-5")
-        audio.setAttribute("controls","controls")
-        audio.src=cancion.preview_url
+        //creo una etiquetra de titulo
+        let titulo=document.createElement("h2")
+        titulo.classList.add("fw-bold")
+        titulo.classList.add("mt-3")
+        titulo.classList.add("text-center")
+        titulo.textContent=producto.producto
+
+
+        //creo una etiqueta de parrafo
+        let precio=document.createElement("p")
+        precio.classList.add("text-center")
+        precio.textContent=producto.precio
+
+        //creo una etiqueta de descripcion
+        let descripcion=document.createElement("p")
+        descripcion.classList.add("text-center")
+        descripcion.textContent=producto.descripcion
+
+        let id=document.createElement("p")
+        id.classList.add("text-center")
+        id.textContent=producto.id
+
+        let tipo=document.createElement("p")
+        tipo.classList.add("text-center")
+        tipo.textContent=producto.tipo
+        
 
         //PADRES E HIJOS
         tarjeta.appendChild(imagen)
-        tarjeta.appendChild(audio)
+        tarjeta.appendChild(titulo)
+        tarjeta.appendChild(id)
+        tarjeta.appendChild(precio)
+        tarjeta.appendChild(descripcion)
+        tarjeta.appendChild(tipo)
         columna.appendChild(tarjeta)
         fila.appendChild(columna)
 
